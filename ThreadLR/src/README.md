@@ -4,7 +4,6 @@
     Offer10I
     Offer10II
     Offer15
-    Offer29
     
 #### LEETCODE 
 
