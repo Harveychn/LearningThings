@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>脚本代码</title>
+</head>
+<body>
+创建一个链表，假设原来链表节点值为30,80,45,76,25,90。给定一个值为50，那么将链表节点次序改成：30,45,25,80,76,90。
+<!--<script>-->
+<!--    var Node = function () {-->
+<!--        this.value;-->
+<!--        this.next;-->
+<!--    }-->
+<!--    var head = new Node();-->
+<!--    var pnode = head;-->
+<!--    for (var i = 0; i < 10; i++) {-->
+<!--        var node1 = new Node();-->
+<!--        node1.value = parseInt(100 * Math.random());-->
+<!--        node1.next = null;-->
+<!--        pnode.next = node1;-->
+<!--        pnode = node1;-->
+<!--        console.log(node1.value);-->
+<!--    }-->
+<!--    p = head.next;-->
+<!--    s = head;-->
+<!--    var t = 50;-->
+<!--    while (p != null) {-->
+<!--        if (p.value >= t) {-->
+<!--            r = p.next;-->
+<!--            var c = p;-->
+<!--            var q = p;-->
+<!--            while (r != null) {-->
+<!--                if (r.value < t && c != p) {-->
+<!--                    p.next = r.next;-->
+<!--                    c.next = p;-->
+<!--                    s.next = r;-->
+<!--                    r.next = q.next;-->
+<!--                    p = r;-->
+<!--                    break;-->
+<!--                } else if (r.value < t && c == p) {-->
+<!--                    p.next = r.next;-->
+<!--                    s.next = r;-->
+<!--                    r.next = p;-->
+<!--                    p = r;-->
+<!--                    break;-->
+<!--                }-->
+<!--                c = r;-->
+<!--                r = r.next;-->
+<!--            }-->
+<!--        }-->
+<!--        s = p;-->
+<!--        p = p.next;-->
+<!--    }-->
+<!--    var q = head.next;-->
+<!--    while (q != null) {-->
+<!--        console.log(q.value);-->
+<!--        q = q.next;-->
+<!--    }-->
+<!--</script>-->
+
+<script>
+    // 问题分析： 一串无序链表节点，给定一个值，从前往后将比改值小的链表节点插入链表尾部
+    var Node = function (val) {
+        this.value = val;
+        this.nextNode = null;
+    }
+
+    // 根据输入建立链表结构并返回链表头结点
+    var buildLinkedList = function (nodes) {
+        var HEAD = null
+        var cur = null
+        nodes.forEach(val => {
+            if (HEAD == null) {
+                HEAD = new Node(val)
+                cur = HEAD
+            } else {
+                aNode = new Node(val)
+                cur.nextNode = aNode
+                cur = aNode
+            }
+        })
+        return HEAD
+    }
+
+    var HEAD = buildLinkedList([2123, 12, 123, 22, 23, 563]) // 12 22 23 2123 123 563
+    var rebuild = function (aVal, linkHead) {
+        var cur = linkHead
+        var pre = linkHead
+
+        // 比输入值小的链表头
+        var subLinkHead = null
+        var subCur = null
+
+        while (cur != null) {
+            // 需要将节点移到末尾的情况
+            if (aVal < cur.value) {
+                // 尾巴链表建立
+                if (subLinkHead == null) {
+                    subLinkHead = new Node(cur.value)
+                    subCur = subLinkHead
+                } else {
+                    var aNode = new Node(cur.value)
+                    subCur.nextNode = aNode
+                    subCur = aNode
+                }
+
+                // 首节点处理
+                if (cur === linkHead) {
+                    linkHead = linkHead.nextNode
+                    pre = linkHead
+                    cur = linkHead
+                } else { // 移除当前节点
+                    pre.nextNode = cur.nextNode
+                    cur = cur.nextNode
+                }
+            } else {
+                pre = cur
+                cur = cur.nextNode
+            }
+        }
+        pre.nextNode = subLinkHead
+        return linkHead
+    }
+    console.log(rebuild(50, HEAD));
+
+</script>
+</body>
+</html>
