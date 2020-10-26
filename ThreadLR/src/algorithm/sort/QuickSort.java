@@ -12,11 +12,30 @@ public class QuickSort {
         QuickSort qs = new QuickSort();
 
         int[] q = new int[]{0, 0, 0, 2, 0, 5};
-        qs.quickSort(q, 0, q.length - 1);
+        qs.quickSortReview(q, 0, q.length - 1);
 
         for (int i : q) {
             System.out.println(i);
         }
+    }
+
+    public void quickSortReview(int[] q, int l, int r) {
+        if (l >= r) {
+            return;
+        }
+        int x = q[(l + r) >> 1], i = l - 1, j = r + 1;
+        while (i < j) {
+            do i++; while (q[i] < x);
+            do --j; while (q[j] > x);
+            if (i < j) {
+                int temp = q[i];
+                q[i] = q[j];
+                q[j] = temp;
+            }
+        }
+        quickSortReview(q, l, j);
+        quickSortReview(q, j + 1, r);
+
     }
 
     public void quickSort(int[] q, int l, int r) {
