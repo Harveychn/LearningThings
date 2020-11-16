@@ -19,7 +19,6 @@ public class CallableRunner {
 
         ExecutorService executor = Executors.newFixedThreadPool(8);
 
-
         Future<Person> task =
                 executor.submit(new CallableDemo());
 

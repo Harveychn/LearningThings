@@ -2,6 +2,7 @@ package reviews;
 
 import algorithm.binarysearch.TreeNode;
 
+import javax.xml.soap.Node;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,7 +19,6 @@ public class TreeSearchTest {
         String[] nodeVal = new String[]{"1", "2", "2", "3", "009", "4", "3"};
         TreeNode<String> root = levelBuildST(nodeVal);
         System.out.println(root);
-        System.gc();
         System.out.println(preOrderVisit(root));
         System.out.println(inOrderVisit(root));
         System.out.println(postOrderVisit(root));
@@ -35,27 +35,25 @@ public class TreeSearchTest {
         }
         TreeNode<String> root = new TreeNode<>(vals[0]);
         TreeNode<String> p = root;
-
         Queue<TreeNode<String>> queue = new LinkedList<>();
+
         int i = 0;
         while (p != null) {
-            if (2 * i + 1 < vals.length) {
-                if (vals[2 * i + 1] != null) {
-                    p.left = new TreeNode<>(vals[2 * i + 1]);
+            if (i * 2 + 1 < vals.length) {
+                if (vals[i * 2 + 1] != null) {
+                    p.left = new TreeNode<>(vals[i * 2 + 1]);
                     queue.add(p.left);
                 }
             }
-
-            if (2 * i + 2 < vals.length) {
-                if (vals[2 * i + 2] != null) {
-                    p.right = new TreeNode<>(vals[2 * i + 2]);
+            if (i * 2 + 2 < vals.length) {
+                if (vals[i * 2 + 2] != null) {
+                    p.right = new TreeNode<>(vals[i * 2 + 2]);
                     queue.add(p.right);
                 }
             }
+            i += 1;
             p = queue.poll();
-            i++;
         }
-
         return root;
     }
 
@@ -65,6 +63,7 @@ public class TreeSearchTest {
         if (node == null) {
             return res;
         }
+
         res.add(node.val);
         res.addAll(preOrderVisit(node.left));
         res.addAll(preOrderVisit(node.right));
@@ -77,6 +76,7 @@ public class TreeSearchTest {
         if (node == null) {
             return res;
         }
+
         res.addAll(inOrderVisit(node.left));
         res.add(node.val);
         res.addAll(inOrderVisit(node.right));
@@ -89,6 +89,7 @@ public class TreeSearchTest {
         if (node == null) {
             return res;
         }
+
         res.addAll(postOrderVisit(node.left));
         res.addAll(postOrderVisit(node.right));
         res.add(node.val);
@@ -101,23 +102,27 @@ public class TreeSearchTest {
         if (node == null) {
             return res;
         }
-        Queue<TreeNode<String>> queue = new LinkedList<>();
-        queue.add(node);
-        while (!queue.isEmpty()) {
-            int levelCount = queue.size();
-            List<String> levelVal = new ArrayList<>();
+        Queue<TreeNode<String>> levelQueue = new LinkedList<>();
+        levelQueue.add(node);
+
+        while (!levelQueue.isEmpty()) {
+            List<String> levelRes = new ArrayList<>();
+            int levelCount = levelQueue.size();
             for (int i = 0; i < levelCount; i++) {
-                TreeNode<String> p = queue.poll();
-                levelVal.add(p.val);
-                if (p.left != null) {
-                    queue.add(p.left);
-                }
-                if (p.right != null) {
-                    queue.add(p.right);
+                TreeNode<String> p = levelQueue.poll();
+                if (p != null) {
+                    levelRes.add(p.val);
+                    if (p.left != null) {
+                        levelQueue.add(p.left);
+                    }
+                    if (p.right != null) {
+                        levelQueue.add(p.right);
+                    }
                 }
             }
-            res.add(levelVal);
+            res.add(levelRes);
         }
+
         return res;
     }
 
@@ -126,28 +131,22 @@ public class TreeSearchTest {
         if (root == null) {
             return true;
         }
-        Queue<TreeNode<String>> queue = new LinkedList<>();
-        queue.add(root.left);
-        queue.add(root.right);
-        while (!queue.isEmpty()) {
-            TreeNode<String> left = queue.poll();
-            TreeNode<String> right = queue.poll();
-            if (left == null && right == null) {
-                continue;
-            }
-            if (left == null || right == null) {
-                return false;
-            }
-            if (!left.val.equals(right.val)) {
-                return false;
-            }
+        return isSymmetric(root.left, root.right);
+    }
 
-            queue.add(left.left);
-            queue.add(right.right);
-
-            queue.add(left.right);
-            queue.add(right.left);
+    public static boolean isSymmetric(TreeNode<String> left, TreeNode<String> right) {
+        if (left == null && right == null) {
+            return true;
         }
+        if (left == null || right == null) {
+            return false;
+        }
+        if (!left.val.equals(right.val))
+            return false;
+        if (!isSymmetric(left.left, right.right))
+            return false;
+        if (!isSymmetric(left.right, right.left))
+            return false;
         return true;
     }
 
@@ -158,30 +157,6 @@ public class TreeSearchTest {
 
     // 最大深度
     public static int maxDepth(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
-        Queue<TreeNode<String>> queue = new LinkedList<>();
-        queue.add(root);
-        List<List<String>> res = new ArrayList<>();
-        while (!queue.isEmpty()) {
-            int time = queue.size();
-            List<String> level = new ArrayList<>();
-            for (int i = 0; i < time; i++) {
-                TreeNode<String> node = queue.poll();
-                if (node == null) {
-                    continue;
-                }
-                level.add(node.val);
-                if (node.left != null) {
-                    queue.add(node.left);
-                }
-                if (node.right != null) {
-                    queue.add(node.right);
-                }
-            }
-            res.add(level);
-        }
-        return res.size();
+        return 0;
     }
 }
