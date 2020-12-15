@@ -1,7 +1,5 @@
 package algorithm.binarysearch;
 
-import com.sun.java.browser.plugin2.liveconnect.v1.BridgeFactory;
-
 import java.util.*;
 
 /**

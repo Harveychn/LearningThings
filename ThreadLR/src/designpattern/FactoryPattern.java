@@ -3,7 +3,7 @@ package designpattern;
 /**
  * [author]:  zhengxiaohui  ;
  * [create date]: 2020/9/9 19:12
- * [description]: 单例模式
+ * [description]: 工厂模式
  * 1、 定义一个类型；
  * 2、 定义类似实现类；
  * 3、 定义一个工厂；
