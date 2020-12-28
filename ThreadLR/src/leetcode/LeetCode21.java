@@ -1,7 +1,5 @@
 package leetcode;
 
-import algorithm.binarysearch.TreeNode;
-
 /**
  * [author]:  zhengxiaohui  ;
  * [create date]: 2020/9/22 17:24

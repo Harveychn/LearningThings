@@ -1,8 +1,7 @@
 package reviews;
 
-import algorithm.binarysearch.TreeNode;
+import algorithm.binarytree.TreeNode;
 
-import javax.xml.soap.Node;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;

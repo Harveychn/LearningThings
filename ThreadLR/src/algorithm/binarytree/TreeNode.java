@@ -1,4 +1,4 @@
-package algorithm.binarysearch;
+package algorithm.binarytree;
 
 /**
  * [author]:  zhengxiaohui  ;
